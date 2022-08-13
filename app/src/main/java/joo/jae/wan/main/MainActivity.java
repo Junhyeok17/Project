@@ -1,8 +1,10 @@
-package joo.jae.wan;
+package joo.jae.wan.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import joo.jae.wan.R;
 
 public class MainActivity extends AppCompatActivity {
 
