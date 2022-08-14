@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.skt.Tmap.TMapView;
 
 import joo.jae.wan.R;
 import kotlin.jvm.internal.Intrinsics;
@@ -35,6 +38,12 @@ public class FragMap extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_map, container, false);
+
+        LinearLayout linearLayoutTmap = view.findViewById(R.id.linearLayoutTmap);
+        ct = container.getContext();
+        TMapView tMapView = new TMapView(ct);
+        tMapView.setSKTMapApiKey( "l7xx1ee83da12e334595b10d8658f0816106" );
+        linearLayoutTmap.addView( tMapView );
 
         // flash button control
         View tmp_btn = view.findViewById(R.id.imageButton);
