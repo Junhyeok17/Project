@@ -1,6 +1,7 @@
 package joo.jae.wan.main;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -16,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
     // 바텀 네비게이션
     BottomNavigationView bottomNavigationView;
-
-    private String TAG = "메인";
 
     // 프래그먼트 변수
     Fragment fragment_map;
@@ -51,29 +50,23 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Log.i(TAG, "바텀 네비게이션 클릭");
 
-                switch (item.getItemId()) {
-                    case R.id.map:
-                        Log.i(TAG, "map 들어옴");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_map).commitAllowingStateLoss();
-                        return true;
-                    case R.id.police:
-                        Log.i(TAG, "police 들어옴");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_police).commitAllowingStateLoss();
-                        return true;
-                    case R.id.report:
-                        Log.i(TAG, "report 들어옴");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_report).commitAllowingStateLoss();
-                        return true;
-                    case R.id.search:
-                        Log.i(TAG, "search 들어옴");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_search).commitAllowingStateLoss();
-                        return true;
-                    case R.id.streetlamp:
-                        Log.i(TAG, "streetlamp 들어옴");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_streetlamp).commitAllowingStateLoss();
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.map) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_map).commitAllowingStateLoss();
+                    return true;
+                } else if (itemId == R.id.police) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_police).commitAllowingStateLoss();
+                    return true;
+                } else if (itemId == R.id.report) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_report).commitAllowingStateLoss();
+                    return true;
+                } else if (itemId == R.id.search) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_search).commitAllowingStateLoss();
+                    return true;
+                } else if (itemId == R.id.streetlamp) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment_streetlamp).commitAllowingStateLoss();
+                    return true;
                 }
                 return true;
             }

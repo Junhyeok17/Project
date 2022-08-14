@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="10dp"
-        android:background="@drawable/buttom_background"
-        app:srcCompat="@drawable/flashlight_off" />
+        android:background="@drawable/button_background"
+        app:srcCompat="@drawable/flashlight_off"
+        android:contentDescription="@null"/>
 
 </android.widget.FrameLayout>

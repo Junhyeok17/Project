@@ -15,12 +15,9 @@ import joo.jae.wan.R;
 public class FragStreetlamp extends Fragment {
     private View view;
 
-    private String TAG = "프래그먼트";
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView");
         view = inflater.inflate(R.layout.frag_streetlamp, container, false);
 
 
