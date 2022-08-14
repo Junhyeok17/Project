@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "843026209306",
+    "project_id": "lightening-walker",
+    "storage_bucket": "lightening-walker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843026209306:android:92cb6f4fbe56f53a820fa3",
+        "android_client_info": {
+          "package_name": "com.example.tmapprac"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843026209306-jmbhm7rachfppog02un8anrreo5197fk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2zM-YnKUcqEs0TFd-pSmkRXpOuPlTTzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843026209306-jmbhm7rachfppog02un8anrreo5197fk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843026209306:android:bb9216b3aa57c4c8820fa3",
+        "android_client_info": {
+          "package_name": "joo.jae.wan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843026209306-jmbhm7rachfppog02un8anrreo5197fk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2zM-YnKUcqEs0TFd-pSmkRXpOuPlTTzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843026209306-jmbhm7rachfppog02un8anrreo5197fk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
