@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/map"
+        android:icon="@drawable/map"
+        android:title="지도"
+        android:enabled="true" />
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/search"
+        android:title="길찾기"
+        android:enabled="true" />
+    <item
+        android:id="@+id/streetlamp"
+        android:icon="@drawable/campaign"
+        android:title="가로등신고"
+        android:enabled="true" />
+    <item
+        android:id="@+id/police"
+        android:icon="@drawable/police"
+        android:title="경찰서안내"
+        android:enabled="true" />
+    <item
+        android:id="@+id/report"
+        android:icon="@drawable/report"
+        android:title="긴급신고"
+        android:enabled="true" />
+
+</menu>
