@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.location.Criteria;
@@ -32,16 +34,19 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
 import com.skt.Tmap.TMapView;
+import com.skt.Tmap.poi_item.TMapPOIItem;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -81,6 +86,8 @@ public class FragMap extends Fragment implements TMapGpsManager.onLocationChange
     FirebaseFirestore firestoreDatabase = FirebaseFirestore.getInstance(); // 신고 접수 데이터 보관할 데이터베이스
 
     TMapGpsManager tMapGps = null;
+    //경찰서 보여줄 tmapdata
+    TMapData tmapdata = new TMapData();
     private LocationManager locationManager = null;
     //boolean on_off = true; // 마커 표시 온오프 체크
 
@@ -324,6 +331,104 @@ public class FragMap extends Fragment implements TMapGpsManager.onLocationChange
 */
     }
 
+    private void policeMaker(){
+        //검색결과표시할때 쓰고 이건 경찰서
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                tmapdata.findAllPOI("지구대", new TMapData.FindAllPOIListenerCallback() {
+                    @Override
+                    public void onFindAllPOI(ArrayList poiItem) {
+                        TMapMarkerItem markerItem1;
+                        for(int i = 0; i < poiItem.size(); i++) {
+                            TMapPOIItem item = (TMapPOIItem) poiItem.get(i);
+                            Log.d("POI Name: ", item.getPOIName().toString() + ", " +
+                                    "Address: " + item.getPOIAddress().replace("null", "")  + ", " +
+                                    "Point: " + item.getPOIPoint().toString());
+
+
+
+
+                            TMapPoint tMapPoint1 = item.getPOIPoint();
+                            // 마커 아이콘
+                            markerItem1 = new TMapMarkerItem();
+                            Context context = getBaseContext();
+                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                            markerItem1.setIcon(bitmap); // 마커 아이콘 지정
+                            markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
+                            markerItem1.setTMapPoint( tMapPoint1 ); // 마커의 좌표 지정
+                            markerItem1.setName(item.getPOIName().toString()); // 마커의 타이틀 지정
+                            tMapView.addMarkerItem(item.getPOIName().toString(), markerItem1); // 지도에 마커 추가
+                        }
+                    }
+                });
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                tmapdata.findAllPOI("파출소", new TMapData.FindAllPOIListenerCallback() {
+                    @Override
+                    public void onFindAllPOI(ArrayList poiItem) {
+                        TMapMarkerItem markerItem1;
+                        for(int i = 0; i < poiItem.size(); i++) {
+                            TMapPOIItem  item = (TMapPOIItem) poiItem.get(i);
+                            Log.d("POI Name: ", item.getPOIName().toString() + ", " +
+                                    "Address: " + item.getPOIAddress().replace("null", "")  + ", " +
+                                    "Point: " + item.getPOIPoint().toString());
+
+
+
+
+                            TMapPoint tMapPoint1 = item.getPOIPoint();
+                            // 마커 아이콘
+                            markerItem1 = new TMapMarkerItem();
+                            Context context = getBaseContext();
+                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                            markerItem1.setIcon(bitmap); // 마커 아이콘 지정
+                            markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
+                            markerItem1.setTMapPoint( tMapPoint1 ); // 마커의 좌표 지정
+                            markerItem1.setName(item.getPOIName().toString()); // 마커의 타이틀 지정
+                            tMapView.addMarkerItem(item.getPOIName().toString(), markerItem1); // 지도에 마커 추가
+                        }
+                    }
+                });
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                tmapdata.findAllPOI("경찰서", new TMapData.FindAllPOIListenerCallback() {
+                    @Override
+                    public void onFindAllPOI(ArrayList poiItem) {
+                        TMapMarkerItem markerItem1;
+                        for(int i = 0; i < poiItem.size(); i++) {
+                            TMapPOIItem  item = (TMapPOIItem) poiItem.get(i);
+                            Log.d("POI Name: ", item.getPOIName().toString() + ", " +
+                                    "Address: " + item.getPOIAddress().replace("null", "")  + ", " +
+                                    "Point: " + item.getPOIPoint().toString());
+
+
+
+
+                            TMapPoint tMapPoint1 = item.getPOIPoint();
+                            // 마커 아이콘
+                            markerItem1 = new TMapMarkerItem();
+                            Context context = getBaseContext();
+                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                            markerItem1.setIcon(bitmap); // 마커 아이콘 지정
+                            markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
+                            markerItem1.setTMapPoint( tMapPoint1 ); // 마커의 좌표 지정
+                            markerItem1.setName(item.getPOIName().toString()); // 마커의 타이틀 지정
+                            tMapView.addMarkerItem(item.getPOIName().toString(), markerItem1); // 지도에 마커 추가
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
     // flash
     Context ct;
     private boolean powerState;
