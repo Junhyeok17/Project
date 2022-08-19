@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
@@ -74,7 +76,19 @@ class DBHelper extends SQLiteOpenHelper {
     }
 }
 
-public class FragMap extends Fragment implements TMapGpsManager.onLocationChangedCallback{
+public class MapActivity extends BaseActivity implements TMapGpsManager.onLocationChangedCallback{
+
+    @Override
+    int getContentViewId() {
+        return R.layout.activity_map;
+    }
+
+    @Override
+    int getNavigationMenuItemId() {
+        return R.id.navigation_map;
+    }
+
+
     private View view;
 
     List<InputStream> inputStreamList = null; // 가로등 정보 파일 스트림 저장하는 객체들 저장
@@ -440,21 +454,21 @@ public class FragMap extends Fragment implements TMapGpsManager.onLocationChange
     }
     // flash
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag_map, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_map);
 
         getData();
-        LinearLayout linearLayoutTmap = view.findViewById(R.id.linearLayoutTmap);
-        ct = container.getContext();
+        FrameLayout linearLayoutTmap = (FrameLayout)findViewById(R.id.linearLayoutTmap);
+        ct = MapActivity.this;
         mapload();
 
         locationManager = (LocationManager)ct.getSystemService(LOCATION_SERVICE);
 
         // 위치 정보 권한 허가
         if(ContextCompat.checkSelfPermission(ct, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
         } else {
             displayMyLocation();
         }
@@ -464,7 +478,7 @@ public class FragMap extends Fragment implements TMapGpsManager.onLocationChange
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DBHelper helper = new DBHelper(MainActivity.this);
+                DBHelper helper = new DBHelper(MapActivity.this);
                 SQLiteDatabase db = helper.getWritableDatabase();
 
                 for(int i=0;i<itemMarkerList.size();i++){
@@ -480,32 +494,31 @@ public class FragMap extends Fragment implements TMapGpsManager.onLocationChange
         }).start();
 */
 
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        tMapView.setSKTMapApiKey( "l7xx1ee83da12e334595b10d8658f0816106" );
+        tMapView.setSKTMapApiKey( "l7xx36688b2c48d64b3fab62a2805f6c7c65" );
         linearLayoutTmap.addView( tMapView );
 
         // flash button control
-        View tmp_btn = view.findViewById(R.id.imageButton);
+        View tmp_btn = this.findViewById(R.id.imageButton);
         Intrinsics.checkNotNullExpressionValue(tmp_btn, "findViewById(R.id.imageButton)");
         final ImageButton btn = (ImageButton)tmp_btn;
-        btn.setOnClickListener((new View.OnClickListener() {
-            public void onClick(View it) {
-                if (FragMap.this.getPowerState()) {
-                    FragMap.this.setPowerState(false);
+        btn.setOnClickListener((View.OnClickListener)(new View.OnClickListener() {
+            public final void onClick(View it) {
+                if (MapActivity.this.getPowerState()) {
+                    MapActivity.this.setPowerState(false);
                     btn.setImageResource(R.drawable.flashlight_off);
                     try {
-                        FragMap.this.controlFlash(FragMap.this.getPowerState());
+                        MapActivity.this.controlFlash(MapActivity.this.getPowerState());
                     } catch (CameraAccessException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    FragMap.this.setPowerState(true);
+                    MapActivity.this.setPowerState(true);
                     btn.setImageResource(R.drawable.flashlight_on);
                     try {
-                        FragMap.this.controlFlash(FragMap.this.getPowerState());
+                        MapActivity.this.controlFlash(MapActivity.this.getPowerState());
                     } catch (CameraAccessException e) {
                         e.printStackTrace();
                     }
@@ -515,12 +528,13 @@ public class FragMap extends Fragment implements TMapGpsManager.onLocationChange
         }));
         // flash button control
 
-        return view;
+        navigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        navigationView.setOnNavigationItemSelectedListener(this);
     }
 
     // flash control
     public final void controlFlash(boolean mode) throws CameraAccessException {
-        Object tmp_cameraM = getActivity().getSystemService(getContext().CAMERA_SERVICE);
+        Object tmp_cameraM = this.getSystemService(Context.CAMERA_SERVICE);
         if (tmp_cameraM == null) {
             throw new NullPointerException("null cannot be cast to non-null type android.hardware.camera2.CameraManager");
         } else {
@@ -530,7 +544,7 @@ public class FragMap extends Fragment implements TMapGpsManager.onLocationChange
             try {
                 cameraM.setTorchMode(cameraListId, mode);
             } catch (Exception e) {
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Camera Flash Error", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(this, "Camera Flash Error", Toast.LENGTH_SHORT);
                 toast.show();
             }
 

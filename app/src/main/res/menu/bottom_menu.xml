@@ -2,27 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/map"
+        android:id="@+id/navigation_map"
         android:icon="@drawable/map"
         android:title="지도"
         android:enabled="true" />
     <item
-        android:id="@+id/search"
+        android:id="@+id/navigation_search"
         android:icon="@drawable/search"
         android:title="길찾기"
         android:enabled="true" />
     <item
-        android:id="@+id/streetlamp"
+        android:id="@+id/navigation_streetlamp"
         android:icon="@drawable/campaign"
         android:title="가로등신고"
         android:enabled="true" />
     <item
-        android:id="@+id/police"
+        android:id="@+id/navigation_police"
         android:icon="@drawable/police"
         android:title="경찰서안내"
         android:enabled="true" />
     <item
-        android:id="@+id/report"
+        android:id="@+id/navigation_report"
         android:icon="@drawable/report"
         android:title="긴급신고"
         android:enabled="true" />
