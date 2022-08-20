@@ -6,6 +6,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -94,10 +95,6 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
     List<InputStream> inputStreamList = null; // 가로등 정보 파일 스트림 저장하는 객체들 저장
     TMapView tMapView = null; // 티맵 보여주는 객체
     List<TMapMarkerItem> itemMarkerList = null; // 위의 파일 스트림에서 추출한 지도상 마커 정보 가진 객체들 저장
-    private EditText latitude = null; // 고장 가로등 신고 접수 시 사용자가 입력하는 위도 정보 추출
-    private EditText longitude = null; // 고장 가로등 신고 접수 시 사용자가 입력하는 경도 정보 추출
-
-    FirebaseFirestore firestoreDatabase = FirebaseFirestore.getInstance(); // 신고 접수 데이터 보관할 데이터베이스
 
     TMapGpsManager tMapGps = null;
     //경찰서 보여줄 tmapdata
@@ -345,7 +342,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
 */
     }
 
-    private void policeMaker(){
+    private void policeMarker(){
         //검색결과표시할때 쓰고 이건 경찰서
         new Thread(new Runnable() {
             @Override
@@ -463,6 +460,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         FrameLayout linearLayoutTmap = (FrameLayout)findViewById(R.id.linearLayoutTmap);
         ct = MapActivity.this;
         mapload();
+        policeMarker();
 
         locationManager = (LocationManager)ct.getSystemService(LOCATION_SERVICE);
 
@@ -622,26 +620,23 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         mymarker.setVisible(TMapMarkerItem.VISIBLE);
         tMapView.addMarkerItem(String.valueOf(-1), mymarker);
     }
-/*
-    위에서 언급한 지정 좌표 사이 좌표값들 가져오는 함수
+
+    //지정 좌표 사이 좌표값들 가져오는 함수
     public LinkedList<TMapPoint> getRangePoints(double s_latitude, double s_longitude, double e_latitude, double e_longitude){
         LinkedList<TMapPoint> tmpList = new LinkedList<>();
-        DBHelper helper = new DBHelper(this);
+        DBHelper helper = new DBHelper(ct);
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(" select latitude, longitude from tb_lamp"
-                +" where "+s_latitude+" <= latitude and latitude <= "+e_latitude, null);
+        Cursor cursor = db.rawQuery("select latitude, longitude from tb_lamp where "+s_latitude+" <= latitude and latitude <= "+e_latitude+
+                " and "+s_longitude+" <= longitude and longitude <= "+e_longitude+" order by latitude, longitude;", null);
 
         Log.d("size", cursor.getCount()+"");
 
+        int i=0;
         while(cursor.moveToNext()){
-            TMapPoint point = new TMapPoint(Double.parseDouble(cursor.getString(0)),
-                    Double.parseDouble(cursor.getString(1)));
-            Log.d("latitude", cursor.getString(0));
-            Log.d("longitude", cursor.getString(1));
+            TMapPoint point = new TMapPoint(Double.parseDouble(cursor.getString(0)), Double.parseDouble(cursor.getString(1)));
             tmpList.add(point);
         }
         db.close();
         return tmpList;
     }
- */
 }
