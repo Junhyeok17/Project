@@ -495,7 +495,6 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        tMapView.setSKTMapApiKey( "l7xx36688b2c48d64b3fab62a2805f6c7c65" );
         linearLayoutTmap.addView( tMapView );
 
         // flash button control
