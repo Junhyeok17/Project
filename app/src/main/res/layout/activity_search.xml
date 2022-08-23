@@ -1,22 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="길찾기"
-            android:textSize="30dp"
-            android:layout_gravity="center"/>
+            android:id="@+id/R_1"
+            android:padding="5dp"
+            >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical"
+                android:id="@+id/L_2"
+                android:layout_toLeftOf="@id/btn_find"
+                >
+
+
+                <EditText
+                    android:id="@+id/edt_start"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:imeOptions="actionSearch"
+                    android:hint="출발지"
+                    android:layout_margin="8dp"
+                    />
+
+                <EditText
+                    android:id="@+id/edt_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:hint="도착지"
+                    android:maxLines="1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_find"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_alignParentRight="true"
+                android:text="길찾기"/>
+        </RelativeLayout>
         <include
             layout="@layout/bottom_navigation_element"
             android:layout_width="match_parent"
@@ -24,5 +75,6 @@
             android:layout_gravity="bottom"
             android:layout_alignParentBottom="true"
             />
+
     </FrameLayout>
 </android.widget.LinearLayout>

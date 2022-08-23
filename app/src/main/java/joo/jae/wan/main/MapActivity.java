@@ -4,6 +4,7 @@ import static android.content.Context.LOCATION_SERVICE;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -451,6 +453,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
     }
     // flash
 
+    String search = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -527,6 +530,30 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
 
         navigationView = (BottomNavigationView) findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
+
+
+        //검색
+        //검색 넘기기
+        EditText editText = (EditText)findViewById(R.id.edt_search);
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                switch(keyCode){
+                    case KeyEvent.KEYCODE_ENTER:
+                        search = editText.getText().toString();
+                        if ( search.length() == 0 ) {
+                            return false;
+                        }
+                        else{
+                            Intent intent = new Intent();
+                            intent.setClass(MapActivity.this, SearchResultActivity.class);
+                            intent.putExtra("searchData", search);
+                            startActivity(intent);
+                        }
+                }
+                return false;
+            }
+        });
     }
 
     // flash control
