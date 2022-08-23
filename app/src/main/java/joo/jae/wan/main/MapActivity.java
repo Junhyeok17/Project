@@ -620,23 +620,4 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         mymarker.setVisible(TMapMarkerItem.VISIBLE);
         tMapView.addMarkerItem(String.valueOf(-1), mymarker);
     }
-
-    //지정 좌표 사이 좌표값들 가져오는 함수
-    public LinkedList<TMapPoint> getRangePoints(double s_latitude, double s_longitude, double e_latitude, double e_longitude){
-        LinkedList<TMapPoint> tmpList = new LinkedList<>();
-        DBHelper helper = new DBHelper(ct);
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select latitude, longitude from tb_lamp where "+s_latitude+" <= latitude and latitude <= "+e_latitude+
-                " and "+s_longitude+" <= longitude and longitude <= "+e_longitude+" order by latitude, longitude;", null);
-
-        Log.d("size", cursor.getCount()+"");
-
-        int i=0;
-        while(cursor.moveToNext()){
-            TMapPoint point = new TMapPoint(Double.parseDouble(cursor.getString(0)), Double.parseDouble(cursor.getString(1)));
-            tmpList.add(point);
-        }
-        db.close();
-        return tmpList;
-    }
 }

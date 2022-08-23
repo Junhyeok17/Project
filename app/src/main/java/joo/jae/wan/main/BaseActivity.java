@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     protected BottomNavigationView navigationView;
 
-    FirebaseFirestore firestoreDatabase = FirebaseFirestore.getInstance(); // 가로등 고장 신고 접수 데이터 보관할 데이터베이스
+    private FirebaseFirestore firestoreDatabase = FirebaseFirestore.getInstance(); // 가로등 고장 신고 접수 데이터 보관할 데이터베이스
 
     private EditText latitude = null; // 고장 가로등 신고 접수 시 사용자가 입력하는 위도 정보 추출
     private EditText longitude = null; // 고장 가로등 신고 접수 시 사용자가 입력하는 경도 정보 추출
@@ -85,6 +85,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Log.d("latitude", latitude.getText()+"");
                                 Log.d("longitude", longitude.getText()+"");
+
+                                if(latitude.getText().toString().length()==0 ||
+                                longitude.getText().toString().length()==0){
+                                    Toast.makeText(BaseActivity.this, "입력된 정보가 없습니다.", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
 
                                 Map<String, String> map = new HashMap<>();
                                 map.put(latitude.getText().toString(), longitude.getText().toString()); // 입력 받은 위치 정보 map 자료구조에 저장
