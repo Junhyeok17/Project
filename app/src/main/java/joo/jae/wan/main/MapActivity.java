@@ -453,6 +453,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
     }
     // flash
 
+    String search = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
