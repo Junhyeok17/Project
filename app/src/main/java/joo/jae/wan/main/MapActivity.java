@@ -62,14 +62,14 @@ import kotlin.jvm.internal.Intrinsics;
 class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context){
-        super(context, "streetlamp", null, 1);
+        super(context, "street_lamps", null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createSQL = "create table tb_lamp ("+
                 "_id integer primary key autoincrement, "+
-                "latitude double not null, "+
-                "longitude double not null)";
+                "latitude text, "+
+                "longitude text)";
         db.execSQL(createSQL);
     }
 
@@ -225,7 +225,6 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         tMapView.setSKTMapApiKey("l7xx1ee83da12e334595b10d8658f0816106");
 
         int sum1 = 0, sum2 = 0; // 파일에서 불러오다보니까 엑셀 내에 파손된 데이터 있길래 그거 필터링하고 남은 좌표 개수 세려고. 무시 가능
-
         try{
             for(int rot=0;rot<inputStreamList.size();rot++) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStreamList.get(rot), Charset.forName("UTF-8")));
@@ -280,7 +279,6 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                     TMapPoint point = new TMapPoint(dx, dy);
 
                     TMapMarkerItem item = new TMapMarkerItem();
-
                     item.setTMapPoint(point);
                     item.setCanShowCallout(true); // 마커 표시 여부
                     item.setCalloutTitle(dx+", "+dy); // 마커 클릭 시 풍선뷰
@@ -474,7 +472,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
             displayMyLocation();
         }
 
-        /*
+
         // getData 때문에 상관 없겠지만 첫 실행 땐 DB 없을테니 이거 주석 풀고 실행하길
         new Thread(new Runnable() {
             @Override
@@ -487,13 +485,14 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                     double dx = point.getLatitude();
                     double dy = point.getLongitude();
                     db.execSQL("insert into tb_lamp (latitude, longitude) values (?, ?)",
-                            new Object[]{dx, dy});
+                            new String[]{String.valueOf(dx), String.valueOf(dy)});
                 }
 
+                Log.d("end", "end");
                 db.close();
             }
         }).start();
-*/
+
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
