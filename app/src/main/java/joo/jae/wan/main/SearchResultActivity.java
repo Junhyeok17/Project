@@ -1,8 +1,6 @@
 package joo.jae.wan.main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,25 +10,17 @@ import com.skt.Tmap.poi_item.TMapPOIItem;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PointF;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.*;
 
-import java.io.File;
 import java.util.Collections;
-import java.util.EventObject;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -203,6 +193,8 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                         Context context = getBaseContext();
 
                         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+
+                        bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
                         markerItem1.setIcon(bitmap); // 마커 아이콘 지정
                         markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
                         markerItem1.setTMapPoint(tMapPoint1); // 마커의 좌표 지정
