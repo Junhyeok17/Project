@@ -404,7 +404,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         FrameLayout linearLayoutTmap = (FrameLayout)findViewById(R.id.linearLayoutTmap);
         ct = MapActivity.this;
         mapload();
-        policeMarker();
+      //  policeMarker();
 
         locationManager = (LocationManager)ct.getSystemService(LOCATION_SERVICE);
 
@@ -499,6 +499,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         });
 
         //경찰서
+        TMapPoint point= new TMapPoint(37.448355, 126.99538666666668);
         tmapdata.findAroundNamePOI(point, "경찰서", 1, 99,
                 new TMapData.FindAroundNamePOIListenerCallback() {
                     @Override
