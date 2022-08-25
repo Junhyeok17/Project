@@ -192,7 +192,7 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                         markerItem1 = new TMapMarkerItem();
                         Context context = getBaseContext();
 
-                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker_p);
 
                         bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
                         markerItem1.setIcon(bitmap); // 마커 아이콘 지정
@@ -255,7 +255,9 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                             markerItem1 = new TMapMarkerItem();
                             Context context = getBaseContext();
 
-                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker_p);
+                            bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
+
                             markerItem1.setIcon(bitmap); // 마커 아이콘 지정
                             markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
                             markerItem1.setTMapPoint(tMapPoint1); // 마커의 좌표 지정
@@ -289,7 +291,9 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                             markerItem1 = new TMapMarkerItem();
                             Context context = getBaseContext();
 
-                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker_p);
+                            bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
+
                             markerItem1.setIcon(bitmap); // 마커 아이콘 지정
                             markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
                             markerItem1.setTMapPoint(tMapPoint1); // 마커의 좌표 지정
