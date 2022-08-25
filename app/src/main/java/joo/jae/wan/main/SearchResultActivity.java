@@ -3,6 +3,7 @@ package joo.jae.wan.main;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.skt.Tmap.*;
@@ -83,6 +84,8 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
     String search_s_r;
     String search_e_r;
     String search;
+    RecyclerView recyclerView;
+    SearchAdapter adapter;
 
     ArrayList<TMapPoint> midList = new ArrayList<>(); // 경유지 모아놓는 리스트
     int rotations = 0; // 경유지 알고리즘 실행 시 사용하는 반복문 변수
@@ -130,6 +133,13 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
         // }
         tMapGPS.OpenGps();
 
+
+        //리사이클러
+        recyclerView = findViewById(R.id.search_result);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new SearchAdapter();
 
         //현재위치 네임
 
@@ -184,6 +194,8 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                                 "Address: " + item.getPOIAddress().replace("null", "") + ", " +
                                 "Point: " + item.getPOIPoint().toString());
 
+                        //리사이클러
+                        adapter.addItem(new Search(item.getPOIName().toString(), item.getPOIAddress().replace("null", "")));
 
                         TMapPoint tMapPoint1 = item.getPOIPoint();
                         // 마커 아이콘
@@ -197,6 +209,7 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                         markerItem1.setName(item.getPOIName().toString()); // 마커의 타이틀 지정
                         tMapView.addMarkerItem(item.getPOIName().toString(), markerItem1); // 지도에 마커 추가
 
+                        /*
                         //그냥 이런식으로 목적지 등록후 경로
                         //TMapPoint tMapPointStart = item.getPOIPoint(); // (출발지)
                         TMapPoint tMapPointStart = new TMapPoint(37.451772605, 126.999302798);
@@ -219,9 +232,14 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                                     }
                                 }
                         );
+                         */
                     }
+
+
                 }
             });
+            recyclerView.setAdapter(adapter);
+
         }
         else{
             if(search_s_r!=null) {
@@ -235,6 +253,10 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                             Log.d("POI Name: ", item.getPOIName().toString() + ", " +
                                     "Address: " + item.getPOIAddress().replace("null", "") + ", " +
                                     "Point: " + item.getPOIPoint().toString());
+
+                            //리사이클러
+                            adapter.addItem(new Search(item.getPOIName().toString(), item.getPOIAddress().replace("null", "")));
+
 
                             TMapPoint tMapPoint1 = item.getPOIPoint();
                             // 마커 아이콘
@@ -250,6 +272,8 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                         }
                     }
                 });
+                recyclerView.setAdapter(adapter);
+
             }
             if(search_e_r!=null){
 
@@ -262,6 +286,11 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                             Log.d("POI Name: ", item.getPOIName().toString() + ", " +
                                     "Address: " + item.getPOIAddress().replace("null", "") + ", " +
                                     "Point: " + item.getPOIPoint().toString());
+
+
+                            //리사이클러
+                            adapter.addItem(new Search(item.getPOIName().toString(), item.getPOIAddress().replace("null", "")));
+
 
                             TMapPoint tMapPoint1 = item.getPOIPoint();
                             // 마커 아이콘
@@ -276,7 +305,7 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                             tMapView.addMarkerItem(item.getPOIName().toString(), markerItem1); // 지도에 마커 추가
 
 
-
+/*
                                 //그냥 이런식으로 목적지 등록후 경로
                                 TMapPoint tMapPointStart = item.getPOIPoint(); // (출발지)
                                 TMapPoint tMapPointEnd = new TMapPoint(37.544951, 126.951900); // (목적지)
@@ -300,10 +329,12 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                                                 tMapView.addTMapPath(polyLine);// 이거 코드 보면 될듯
 
                                             }
-                                        });
+                                        });*/
                         }
                     }
                 });
+                recyclerView.setAdapter(adapter);
+
 
             }
         }
