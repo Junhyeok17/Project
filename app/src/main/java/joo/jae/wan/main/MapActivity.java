@@ -1,17 +1,15 @@
 package joo.jae.wan.main;
 
-import static android.content.Context.LOCATION_SERVICE;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.location.Criteria;
@@ -22,23 +20,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
@@ -91,9 +82,6 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         return R.id.navigation_map;
     }
 
-
-    private View view;
-
     List<InputStream> inputStreamList = null; // 가로등 정보 파일 스트림 저장하는 객체들 저장
     TMapView tMapView = null; // 티맵 보여주는 객체
     List<TMapMarkerItem> itemMarkerList = null; // 위의 파일 스트림에서 추출한 지도상 마커 정보 가진 객체들 저장
@@ -102,7 +90,6 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
     //경찰서 보여줄 tmapdata
     TMapData tmapdata = new TMapData();
     private LocationManager locationManager = null;
-    //boolean on_off = true; // 마커 표시 온오프 체크
 
     // asset 파일에서 가로등 위치 정보 엑셀 파읿 불러오는 함수
     private void getData(){
@@ -224,6 +211,9 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         tMapView = new TMapView(ct);
         tMapView.setSKTMapApiKey("l7xx1ee83da12e334595b10d8658f0816106");
 
+        Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                R.drawable.streetlamp);
+        bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
         int sum1 = 0, sum2 = 0; // 파일에서 불러오다보니까 엑셀 내에 파손된 데이터 있길래 그거 필터링하고 남은 좌표 개수 세려고. 무시 가능
         try{
             for(int rot=0;rot<inputStreamList.size();rot++) {
@@ -277,10 +267,11 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                     double dy = Double.parseDouble(y.substring(0, y.length()-1));
 
                     TMapPoint point = new TMapPoint(dx, dy);
-
                     TMapMarkerItem item = new TMapMarkerItem();
                     item.setTMapPoint(point);
                     item.setCanShowCallout(true); // 마커 표시 여부
+
+                    item.setIcon(bitmap);
                     item.setCalloutTitle(dx+", "+dy); // 마커 클릭 시 풍선뷰
                     item.setVisible(TMapMarkerItem.VISIBLE);
 
@@ -289,57 +280,9 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                 }
             }
             Log.d("sum", sum1+"+"+sum2);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // 가로등 위치 정보 파일 asset에서 안 가져오고 firebase에 저장해놨다가 불러오게 해서 앱 용량 조금이라도 줄이려고 했는데...
-        // 데이터 크기가 20만인가 200만 바이트였나 그래서 저장이 안 된답니다.... (좌표 수가 20만 개이긴 해)
-        // document 당 용량 정해진 것 같아서 일부러 document도 분할해봤는데 그래도 안 돼 .... 지우려면 지우시길
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                Map<String, String> map = new HashMap<>();
-                Map<String, String> map2 = new HashMap<>();
-                Map<String, String> map3 = new HashMap<>();
-
-                for(int i=0;i<itemList.size();i++) {
-                    TMapPoint point = itemList.get(i).getTMapPoint();
-
-                    if(0<=i && i<itemList.size()/3)
-                        map.put(point.getLatitude()+"", point.getLongitude()+"");
-                    else if(itemList.size()/3<=i && i<= itemList.size()/3*2)
-                        map2.put(point.getLatitude()+"", point.getLongitude()+"");
-                    else
-                        map3.put(point.getLatitude()+"", point.getLongitude()+"");
-                }
-
-                database.collection("locations").document("location")
-                        .set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("success1", "success");
-                    }
-                });
-                database.collection("locations").document("location2")
-                        .set(map2).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("success2", "success");
-                    }
-                });
-                database.collection("locations").document("location3")
-                        .set(map3).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("success3", "success");
-                    }
-                });
-            }
-        }).start();
-*/
     }
 
     private void policeMarker(){
@@ -474,6 +417,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
 
 
         // getData 때문에 상관 없겠지만 첫 실행 땐 DB 없을테니 이거 주석 풀고 실행하길
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -492,7 +436,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                 db.close();
             }
         }).start();
-
+*/
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
