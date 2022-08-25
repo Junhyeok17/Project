@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import joo.jae.wan.R;
+import joo.jae.wan.urgentreport.ReportActivity;
 
 public abstract class BaseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 

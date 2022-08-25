@@ -35,7 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.ReportActivity" />
+        <activity android:name=".urgentreport.ReportActivity" />
         <activity android:name=".main.SearchActivity" />
         <activity android:name=".main.PoliceActivity" />
         <activity android:name=".main.StreetlampActivity" />
