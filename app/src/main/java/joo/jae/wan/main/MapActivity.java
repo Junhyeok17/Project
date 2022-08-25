@@ -497,6 +497,30 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                 return false;
             }
         });
+
+        //경찰서
+        tmapdata.findAroundNamePOI(point, "경찰서", 1, 99,
+                new TMapData.FindAroundNamePOIListenerCallback() {
+                    @Override
+                    public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
+                        for (int i = 0; i < poiItem.size(); i++) {
+                            TMapPOIItem item = poiItem.get(i);
+                            Log.d("편의시설","POI Name: " + item.getPOIName() + "," + "Address: "
+                                    + item.getPOIAddress().replace("null", ""));
+                            TMapPoint tMapPoint1 = item.getPOIPoint();
+                            // 마커 아이콘
+                            TMapMarkerItem markerItem1;
+                            markerItem1 = new TMapMarkerItem();
+                            Context context = getBaseContext();
+                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                            markerItem1.setIcon(bitmap); // 마커 아이콘 지정
+                            markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
+                            markerItem1.setTMapPoint( tMapPoint1 ); // 마커의 좌표 지정
+                            markerItem1.setName(item.getPOIName().toString()); // 마커의 타이틀 지정
+                            tMapView.addMarkerItem(item.getPOIName().toString(), markerItem1); // 지도에 마커 추가
+                        }
+                    }
+                });
     }
 
     // flash control
