@@ -395,17 +395,16 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
 
         Cursor cursor = db.rawQuery("select latitude, longitude from tb_lamp", null);
         Log.d("size", cursor.getCount()+"");
-/*
+
         int i=0;
         while(cursor.moveToNext()){
             TMapPoint point = new TMapPoint(Double.parseDouble(cursor.getString(0)), Double.parseDouble(cursor.getString(1)));
             NearLocation nearLocation = new NearLocation(point);
-            Log.d("near loc", nearLocation.getPoint().getLatitude()+", "+
-                    nearLocation.getPoint().getLongitude());
+//            Log.d("near loc", nearLocation.getPoint().getLatitude()+", "+ nearLocation.getPoint().getLongitude());
             tmpList.add(nearLocation);
         }
+
         db.close();
-        */
         return tmpList; // 좌표들 모아놓은 리스트 리턴
     }
 }

@@ -52,7 +52,7 @@ import kotlin.jvm.internal.Intrinsics;
 class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context){
-        super(context, "street_lamps", null, 1);
+        super(context, "streetLamps", null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -233,6 +233,9 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
 
                     String x = st.nextToken();
                     String y = st.nextToken();
+
+                    if(x.length() < 10 || y.length() < 11)
+                        continue;
 
                     boolean check = false;
                     for(int dx=0;dx<x.length();dx++) {
@@ -418,7 +421,6 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
 
         // getData 때문에 상관 없겠지만 첫 실행 땐 DB 없을테니 이거 주석 풀고 실행하길
         // + 이 코드는 실행 한 번만 하고 다시 주석처리..!
-        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -432,12 +434,10 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                     db.execSQL("insert into tb_lamp (latitude, longitude) values (?, ?)",
                             new String[]{String.valueOf(dx), String.valueOf(dy)});
                 }
-
-                Log.d("end", "end");
                 db.close();
+                Log.d("end", "end");
             }
         }).start();
-*/
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
