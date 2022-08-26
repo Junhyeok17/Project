@@ -151,6 +151,7 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
         List<NearLocation> rangePoints = getRangePoints(37.451772605, 126.999302798,
                 37.44905232, 127.011678186);
 
+        /*
         for(int i=0;i<rangePoints.size();i++){
             TMapPoint destination = rangePoints.get(i).getPoint();
             Log.d("location", destination.getLatitude()+", "+destination.getLongitude());
@@ -166,9 +167,9 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
             item.setCalloutTitle(i+"번");
             tMapView.addMarkerItem(i+"", item);
         }
+  */
         linearLayoutTmap.addView(tMapView);
         //findAllLayovers(tMapPointStart, tMapPointEnd);
-
 
         if(search!=null) {
             tmapdata.findAllPOI(search, new TMapData.FindAllPOIListenerCallback() {
@@ -178,6 +179,8 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
 
                     //TMapPOIItem item = (TMapPOIItem) poiItem.get(0);
 
+                    Context context = getBaseContext();
+                    Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
                     for (int i = 0; i < poiItem.size(); i++) {
                         TMapPOIItem item = (TMapPOIItem) poiItem.get(i);
                         Log.d("POI Name: ", item.getPOIName().toString() + ", " +
@@ -190,9 +193,6 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                         TMapPoint tMapPoint1 = item.getPOIPoint();
                         // 마커 아이콘
                         markerItem1 = new TMapMarkerItem();
-                        Context context = getBaseContext();
-
-                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
 
                         bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
                         markerItem1.setIcon(bitmap); // 마커 아이콘 지정
@@ -240,6 +240,9 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                     @Override
                     public void onFindAllPOI(ArrayList poiItem) {
                         TMapMarkerItem markerItem1;
+                        Context context = getBaseContext();
+
+                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
                         for (int i = 0; i < poiItem.size(); i++) {
                             TMapPOIItem item = (TMapPOIItem) poiItem.get(i);
                             Log.d("POI Name: ", item.getPOIName().toString() + ", " +
@@ -253,9 +256,6 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                             TMapPoint tMapPoint1 = item.getPOIPoint();
                             // 마커 아이콘
                             markerItem1 = new TMapMarkerItem();
-                            Context context = getBaseContext();
-
-                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
                             markerItem1.setIcon(bitmap); // 마커 아이콘 지정
                             markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
                             markerItem1.setTMapPoint(tMapPoint1); // 마커의 좌표 지정
@@ -273,6 +273,9 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                     @Override
                     public void onFindAllPOI(ArrayList poiItem) {
                         TMapMarkerItem markerItem1;
+                        Context context = getBaseContext();
+
+                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
                         for (int i = 0; i < poiItem.size(); i++) {
                             TMapPOIItem item = (TMapPOIItem) poiItem.get(i);
                             Log.d("POI Name: ", item.getPOIName().toString() + ", " +
@@ -287,9 +290,6 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                             TMapPoint tMapPoint1 = item.getPOIPoint();
                             // 마커 아이콘
                             markerItem1 = new TMapMarkerItem();
-                            Context context = getBaseContext();
-
-                            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
                             markerItem1.setIcon(bitmap); // 마커 아이콘 지정
                             markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
                             markerItem1.setTMapPoint(tMapPoint1); // 마커의 좌표 지정
@@ -386,11 +386,12 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
         List<NearLocation> tmpList = new LinkedList<>();
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select latitude, longitude from tb_lamp where "+s_latitude+" <= latitude and latitude <= "+e_latitude+
-                " and "+s_longitude+" <= longitude and longitude <= "+e_longitude+" order by latitude, longitude;", null);
+        //Cursor cursor = db.rawQuery("select latitude, longitude from tb_lamp where "+s_latitude+" <= latitude and latitude <= "+e_latitude+
+        //        " and "+s_longitude+" <= longitude and longitude <= "+e_longitude+" order by latitude, longitude;", null);
 
+        Cursor cursor = db.rawQuery("select latitude, longitude from tb_lamp", null);
         Log.d("size", cursor.getCount()+"");
-
+/*
         int i=0;
         while(cursor.moveToNext()){
             TMapPoint point = new TMapPoint(Double.parseDouble(cursor.getString(0)), Double.parseDouble(cursor.getString(1)));
@@ -400,6 +401,7 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
             tmpList.add(nearLocation);
         }
         db.close();
+        */
         return tmpList; // 좌표들 모아놓은 리스트 리턴
     }
 }

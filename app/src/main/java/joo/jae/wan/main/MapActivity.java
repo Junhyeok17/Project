@@ -210,6 +210,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         tMapView = new TMapView(ct);
         tMapView.setSKTMapApiKey("l7xx1ee83da12e334595b10d8658f0816106");
 
+        int total = 0;
         Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(),
                 R.drawable.streetlamp);
         bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
@@ -232,8 +233,6 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
 
                     String x = st.nextToken();
                     String y = st.nextToken();
-                    if(x.length()<10 || y.length()<11)
-                        continue;
 
                     boolean check = false;
                     for(int dx=0;dx<x.length();dx++) {
@@ -274,10 +273,12 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                     item.setCalloutTitle(dx+", "+dy); // 마커 클릭 시 풍선뷰
                     item.setVisible(TMapMarkerItem.VISIBLE);
 
+                    total++;
                     itemMarkerList.add(item);
                     tMapView.addMarkerItem(String.valueOf(i), item);
                 }
             }
+            Log.d("total", total+"");
             Log.d("sum", sum1+"+"+sum2);
         } catch (IOException e) {
             e.printStackTrace();
@@ -416,6 +417,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
 
 
         // getData 때문에 상관 없겠지만 첫 실행 땐 DB 없을테니 이거 주석 풀고 실행하길
+        // + 이 코드는 실행 한 번만 하고 다시 주석처리..!
         /*
         new Thread(new Runnable() {
             @Override
