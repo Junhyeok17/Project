@@ -180,7 +180,9 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                     //TMapPOIItem item = (TMapPOIItem) poiItem.get(0);
 
                     Context context = getBaseContext();
-                    Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+
+                    Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker_p);
+                    bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
                     for (int i = 0; i < poiItem.size(); i++) {
                         TMapPOIItem item = (TMapPOIItem) poiItem.get(i);
                         Log.d("POI Name: ", item.getPOIName().toString() + ", " +
@@ -242,7 +244,8 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                         TMapMarkerItem markerItem1;
                         Context context = getBaseContext();
 
-                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker_p);
+                        bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
                         for (int i = 0; i < poiItem.size(); i++) {
                             TMapPOIItem item = (TMapPOIItem) poiItem.get(i);
                             Log.d("POI Name: ", item.getPOIName().toString() + ", " +
@@ -275,7 +278,8 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                         TMapMarkerItem markerItem1;
                         Context context = getBaseContext();
 
-                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker);
+                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.marker_p);
+                        bitmap = Bitmap.createScaledBitmap(bitmap, 50,50,false);
                         for (int i = 0; i < poiItem.size(); i++) {
                             TMapPOIItem item = (TMapPOIItem) poiItem.get(i);
                             Log.d("POI Name: ", item.getPOIName().toString() + ", " +
