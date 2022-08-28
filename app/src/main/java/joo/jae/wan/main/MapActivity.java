@@ -421,6 +421,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
 
         // getData 때문에 상관 없겠지만 첫 실행 땐 DB 없을테니 이거 주석 풀고 실행하길
         // + 이 코드는 실행 한 번만 하고 다시 주석처리..!
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -438,7 +439,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                 Log.d("end", "end");
             }
         }).start();
-
+*/
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 

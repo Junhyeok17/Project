@@ -28,35 +28,6 @@ import java.util.List;
 
 import joo.jae.wan.R;
 
-class NearLocation implements Comparable{
-    private TMapPoint point;
-    private double distance; // 현 위치와 근접한 좌표까지의 거리
-
-    public NearLocation(TMapPoint point){
-        this.point = point;
-    }
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-    public TMapPoint getPoint(){
-        return point;
-    }
-    public double getDistance(){
-        return distance;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        NearLocation location = (NearLocation) o;
-        if(this.distance > location.getDistance())
-            return 1;
-        else if(this.distance < location.getDistance())
-            return -1;
-        else
-            return 0;
-    }
-}
-
 public class SearchResultActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback{
     double Distance;
     //TMapView tMapView = null;
@@ -77,8 +48,6 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
     RecyclerView recyclerView;
     SearchAdapter adapter;
 
-    ArrayList<TMapPoint> midList = new ArrayList<>(); // 경유지 모아놓는 리스트
-    int rotations = 0; // 경유지 알고리즘 실행 시 사용하는 반복문 변수
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,9 +117,6 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
         TMapPoint tMapPointStart = new TMapPoint(37.451772605, 126.999302798);
         TMapPoint tMapPointEnd = new TMapPoint(37.44905232, 127.011678186); // (목적지)
 
-        List<NearLocation> rangePoints = getRangePoints(37.451772605, 126.999302798,
-                37.44905232, 127.011678186);
-
         /*
         for(int i=0;i<rangePoints.size();i++){
             TMapPoint destination = rangePoints.get(i).getPoint();
@@ -169,7 +135,6 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
         }
   */
         linearLayoutTmap.addView(tMapView);
-        //findAllLayovers(tMapPointStart, tMapPointEnd);
 
         if(search!=null) {
             tmapdata.findAllPOI(search, new TMapData.FindAllPOIListenerCallback() {
@@ -336,75 +301,11 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
         }
     }
 
-    private double getDistance(TMapPoint a, TMapPoint b){
-        return Math.sqrt(Math.pow(a.getLatitude()-b.getLatitude(), 2)+Math.pow(a.getLongitude()-b.getLongitude(), 2));
-    }
-
     @Override
     public void onLocationChange(Location location) {
         //  Log.d("현재 값 : ", address + " " + location.getLatitude() + " " + location.getLongitude());
         tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
         tMapView.setCenterPoint(location.getLongitude(), location.getLatitude());
         //현재위치 추적
-    }
-
-    // 경유지 찾는 함수
-    public void findAllLayovers(TMapPoint start, TMapPoint end){
-        List<NearLocation> rangePoints = getRangePoints(start.getLatitude(), start.getLongitude(),
-                end.getLatitude(), end.getLongitude());
-
-        Log.d("size", rangePoints.size()+"");
-
-        TMapData tmapdata = new TMapData();
-        final ArrayList<TMapPoint> passList = new ArrayList<>();
-
-        for(rotations=0;rotations<rangePoints.size();rotations++) {
-            tmapdata.findPathDataWithType(TMapData.TMapPathType.PEDESTRIAN_PATH, start, end,
-                    passList, 10, new TMapData.FindPathDataListenerCallback() {
-                        @Override
-                        public void onFindPathData(TMapPolyLine tMapPolyLine) {
-                            rangePoints.get(rotations).setDistance(tMapPolyLine.getDistance());
-
-                            if(rotations==rangePoints.size()){
-
-                            }
-                        }
-                    });
-        }
-    }
-
-    //지정 좌표 사이 좌표값들 가져오는 함수
-    public List<NearLocation> getRangePoints(double s_latitude, double s_longitude, double e_latitude, double e_longitude){
-        if(e_latitude < s_latitude){
-            double tmp = e_latitude;
-            e_latitude = s_latitude;
-            s_latitude = tmp;
-        }
-
-        if(e_longitude < s_longitude){
-            double tmp = e_longitude;
-            e_longitude = s_longitude;
-            s_longitude = tmp;
-        }
-
-        List<NearLocation> tmpList = new LinkedList<>();
-        DBHelper helper = new DBHelper(this);
-        SQLiteDatabase db = helper.getReadableDatabase();
-        //Cursor cursor = db.rawQuery("select latitude, longitude from tb_lamp where "+s_latitude+" <= latitude and latitude <= "+e_latitude+
-        //        " and "+s_longitude+" <= longitude and longitude <= "+e_longitude+" order by latitude, longitude;", null);
-
-        Cursor cursor = db.rawQuery("select latitude, longitude from tb_lamp", null);
-        Log.d("size", cursor.getCount()+"");
-
-        int i=0;
-        while(cursor.moveToNext()){
-            TMapPoint point = new TMapPoint(Double.parseDouble(cursor.getString(0)), Double.parseDouble(cursor.getString(1)));
-            NearLocation nearLocation = new NearLocation(point);
-//            Log.d("near loc", nearLocation.getPoint().getLatitude()+", "+ nearLocation.getPoint().getLongitude());
-            tmpList.add(nearLocation);
-        }
-
-        db.close();
-        return tmpList; // 좌표들 모아놓은 리스트 리턴
     }
 }

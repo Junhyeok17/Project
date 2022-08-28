@@ -24,6 +24,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".main.ResultPaths"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".main.SearchResultActivity"
             android:exported="false" />
         <activity
@@ -38,7 +47,6 @@
         <activity android:name=".urgentreport.ReportActivity" />
         <activity android:name=".main.SearchActivity" />
         <activity android:name=".main.PoliceActivity" />
-        <activity android:name=".main.StreetlampActivity" />
     </application>
 
 </manifest>
