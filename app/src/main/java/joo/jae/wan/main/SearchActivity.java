@@ -14,6 +14,10 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import joo.jae.wan.R;
 
 public class SearchActivity extends BaseActivity{
@@ -98,6 +102,8 @@ public class SearchActivity extends BaseActivity{
 
 
         if (search_s_r == null || search_e_r == null) {
+            navigationView=(BottomNavigationView)findViewById(R.id.navigation);
+            navigationView.setOnNavigationItemSelectedListener(this);
             return;
         }
         else {
@@ -109,5 +115,8 @@ public class SearchActivity extends BaseActivity{
                 startActivity(intent);
 */
         }
+
+        navigationView=(BottomNavigationView)findViewById(R.id.navigation);
+        navigationView.setOnNavigationItemSelectedListener(this);
     }
 }
