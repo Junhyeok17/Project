@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -418,28 +419,29 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
             displayMyLocation();
         }
 
-
-        // getData 때문에 상관 없겠지만 첫 실행 땐 DB 없을테니 이거 주석 풀고 실행하길
-        // + 이 코드는 실행 한 번만 하고 다시 주석처리..!
-        /*
+        // 최초 실행 시 DB 생성을 위해 20분 정도 기다린 후 logcat에 end 로그 찍히면 사용할 것...
         new Thread(new Runnable() {
             @Override
             public void run() {
                 DBHelper helper = new DBHelper(MapActivity.this);
                 SQLiteDatabase db = helper.getWritableDatabase();
 
-                for(int i=0;i<itemMarkerList.size();i++){
-                    TMapPoint point = itemMarkerList.get(i).getTMapPoint();
-                    double dx = point.getLatitude();
-                    double dy = point.getLongitude();
-                    db.execSQL("insert into tb_lamp (latitude, longitude) values (?, ?)",
-                            new String[]{String.valueOf(dx), String.valueOf(dy)});
+                Cursor cursor = db.rawQuery("select * from tb_lamp", null);
+
+                if(cursor.getCount()==0) {
+                    for (int i = 0; i < itemMarkerList.size(); i++) {
+                        TMapPoint point = itemMarkerList.get(i).getTMapPoint();
+                        double dx = point.getLatitude();
+                        double dy = point.getLongitude();
+                        db.execSQL("insert into tb_lamp (latitude, longitude) values (?, ?)",
+                                new String[]{String.valueOf(dx), String.valueOf(dy)});
+                    }
                 }
                 db.close();
                 Log.d("end", "end");
             }
         }).start();
-*/
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
