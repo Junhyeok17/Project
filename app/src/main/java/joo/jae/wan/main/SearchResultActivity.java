@@ -165,7 +165,7 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                             e.printStackTrace();
                         }
                         //리사이클러
-                        adapter.addItem(new Search(item.getPOIName().toString(), address_r));
+                        adapter.addItem(new Search(item.getPOIName().toString(), address_r, 1));
 
                         TMapPoint tMapPoint1 = item.getPOIPoint();
                         // 마커 아이콘
@@ -228,7 +228,7 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                                     "Point: " + item.getPOIPoint().toString());
 
                             //리사이클러
-                            adapter.addItem(new Search(item.getPOIName().toString(), item.getPOIAddress().replace("null", "")));
+                            adapter.addItem(new Search(item.getPOIName().toString(), item.getPOIAddress().replace("null", ""),0));
 
 
                             TMapPoint tMapPoint1 = item.getPOIPoint();
@@ -263,7 +263,7 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
 
 
                             //리사이클러
-                            adapter.addItem(new Search(item.getPOIName().toString(), item.getPOIAddress().replace("null", "")));
+                            adapter.addItem(new Search(item.getPOIName().toString(), item.getPOIAddress().replace("null", ""),0));
 
 
                             TMapPoint tMapPoint1 = item.getPOIPoint();
