@@ -1,5 +1,8 @@
 package joo.jae.wan.main;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import joo.jae.wan.R;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     ArrayList<Search> items = new ArrayList<Search>();
 
+    Context context;
 
     @NonNull
     @Override
@@ -22,7 +26,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.item, parent, false);
-
+        context=itemView.getContext();
         return new ViewHolder(itemView);
     }
 
@@ -53,7 +57,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         items.set(position, item);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView address;
 
@@ -62,6 +66,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
             name = itemView.findViewById(R.id.tv_list_name);
             address = itemView.findViewById(R.id.tv_list_road);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition() ;
+                    if (pos != RecyclerView.NO_POSITION) {
+                        Search item = items.get(pos) ;
+                        Log.d("!!!!!!!!!!!!!",item.getAddress());
+                        Intent intent = new Intent();
+                        intent.setClass(v.getContext(), SearchActivity.class);
+                        intent.putExtra("address", item.getAddress());
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
 
         public void setItem(Search item) {
