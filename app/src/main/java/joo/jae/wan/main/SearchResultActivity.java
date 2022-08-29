@@ -137,6 +137,9 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
         linearLayoutTmap.addView(tMapView);
 
         if(search!=null) {
+           // EditText editText= findViewById(R.id.edt_start);
+           // editText.setText("현재위치");
+
             tmapdata.findAllPOI(search, new TMapData.FindAllPOIListenerCallback() {
                 @Override
                 public void onFindAllPOI(ArrayList poiItem) {
@@ -154,8 +157,15 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
                                 "Address: " + item.getPOIAddress().replace("null", "") + ", " +
                                 "Point: " + item.getPOIPoint().toString());
 
+                        String address_r=null;
+                        try {
+                            address_r = new TMapData().convertGpsToAddress(item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude());
+
+                        }catch(Exception e) {
+                            e.printStackTrace();
+                        }
                         //리사이클러
-                        adapter.addItem(new Search(item.getPOIName().toString(), item.getPOIAddress().replace("null", "")));
+                        adapter.addItem(new Search(item.getPOIName().toString(), address_r));
 
                         TMapPoint tMapPoint1 = item.getPOIPoint();
                         // 마커 아이콘
