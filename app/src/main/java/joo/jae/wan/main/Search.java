@@ -3,10 +3,12 @@ package joo.jae.wan.main;
 public class Search {
     String name;
     String address;
+    int check;
 
-    public Search(String name, String address) {
+    public Search(String name, String address, int check) {
         this.name = name;
         this.address = address;
+        this.check=check;
     }
 
     public String getName() {
@@ -16,6 +18,8 @@ public class Search {
     public String getAddress() {
         return address;
     }
+
+    public int getCheck(){return check;}
 
     public void setName(String name) {
         this.name = name;

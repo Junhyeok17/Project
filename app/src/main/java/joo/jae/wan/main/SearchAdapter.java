@@ -72,10 +72,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     int pos = getAdapterPosition() ;
                     if (pos != RecyclerView.NO_POSITION) {
                         Search item = items.get(pos) ;
+
                         Log.d("!!!!!!!!!!!!!",item.getAddress());
                         Intent intent = new Intent();
                         intent.setClass(v.getContext(), SearchActivity.class);
                         intent.putExtra("address", item.getAddress());
+                        intent.putExtra("check", item.getCheck());
                         context.startActivity(intent);
                     }
                 }

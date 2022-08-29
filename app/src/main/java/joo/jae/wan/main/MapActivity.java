@@ -495,6 +495,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
                             Intent intent = new Intent();
                             intent.setClass(MapActivity.this, SearchResultActivity.class);
                             intent.putExtra("searchData", search);
+                            intent.putExtra("check","check");
                             startActivity(intent);
                         }
                 }

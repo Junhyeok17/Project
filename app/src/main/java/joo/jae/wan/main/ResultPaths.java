@@ -2,6 +2,7 @@ package joo.jae.wan.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -87,6 +88,11 @@ public class ResultPaths extends AppCompatActivity {
         // 출발지, 도착지 설정
         String startLocation = null;
         String endLocation = null;
+
+        Intent intent_s = getIntent();
+        startLocation= intent_s.getStringExtra("start");
+        Intent intent_e = getIntent();
+        endLocation= intent_e.getStringExtra("end");
 
         startArea.setText("출발지 : "+startLocation);
         endArea.setText("도착지 : "+endLocation);
