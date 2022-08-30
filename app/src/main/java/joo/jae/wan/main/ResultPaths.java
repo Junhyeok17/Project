@@ -69,6 +69,9 @@ class NearLocation implements Comparable{
 
 public class ResultPaths extends AppCompatActivity {
 
+    private LinearLayout loadingLayout = null;
+
+    private LinearLayout pathsLayout = null;
     private TextView startArea = null;
     private TextView endArea = null;
 
@@ -96,18 +99,21 @@ public class ResultPaths extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_paths);
 
+        loadingLayout = (LinearLayout)findViewById(R.id.loading);
+        pathsLayout = (LinearLayout)findViewById(R.id.pathsLayout);
+
         startArea = (TextView) findViewById(R.id.start_area);
         endArea = (TextView) findViewById(R.id.arrive_area);
 
         // 출발지, 도착지 설정
         String startLocation = null;
         String endLocation = null;
-
+/*
         Intent intent_s = getIntent();
         startLocation= intent_s.getStringExtra("start");
         Intent intent_e = getIntent();
         endLocation= intent_e.getStringExtra("end");
-
+*/
         startArea.setText("출발지 : "+startLocation);
         endArea.setText("도착지 : "+endLocation);
 
@@ -128,6 +134,14 @@ public class ResultPaths extends AppCompatActivity {
 
         showShortestPath();
         showLightPath();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        loadingLayout.setVisibility(View.GONE);
+        pathsLayout.setVisibility(View.VISIBLE);
 
         radioGroup = (RadioGroup) findViewById(R.id.paths);
         radioGroup.setOnCheckedChangeListener(checkedChangeListener);

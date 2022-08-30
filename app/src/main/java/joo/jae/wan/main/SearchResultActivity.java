@@ -114,26 +114,6 @@ public class SearchResultActivity extends AppCompatActivity implements TMapGpsMa
         Log.d(search, "================================");
         TMapData tmapdata = new TMapData();
 
-        TMapPoint tMapPointStart = new TMapPoint(37.451772605, 126.999302798);
-        TMapPoint tMapPointEnd = new TMapPoint(37.44905232, 127.011678186); // (목적지)
-
-        /*
-        for(int i=0;i<rangePoints.size();i++){
-            TMapPoint destination = rangePoints.get(i).getPoint();
-            Log.d("location", destination.getLatitude()+", "+destination.getLongitude());
-            rangePoints.get(i).setDistance(getDistance(tMapPointStart, destination));
-        }
-
-        Collections.sort(rangePoints);
-
-        for(int i=0;i<rangePoints.size();i++){
-            TMapMarkerItem item = new TMapMarkerItem();
-            item.setTMapPoint(rangePoints.get(i).getPoint());
-            item.setVisible(TMapMarkerItem.VISIBLE);
-            item.setCalloutTitle(i+"번");
-            tMapView.addMarkerItem(i+"", item);
-        }
-  */
         linearLayoutTmap.addView(tMapView);
 
         if(search!=null) {

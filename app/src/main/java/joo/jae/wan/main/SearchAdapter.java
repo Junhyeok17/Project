@@ -75,7 +75,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
                         Log.d("!!!!!!!!!!!!!",item.getAddress());
                         Intent intent = new Intent();
-                        intent.setClass(v.getContext(), SearchActivity.class);
+                        intent.setClass(v.getContext(), ResultPaths.class);
                         intent.putExtra("address", item.getAddress());
                         intent.putExtra("check", item.getCheck());
                         context.startActivity(intent);

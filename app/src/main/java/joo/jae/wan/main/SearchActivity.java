@@ -46,7 +46,7 @@ public class SearchActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        //어디에서 오는 지 채크
+        //어디에서 오는 지 체크
         Intent intent_c = getIntent();
         check=intent_c.getIntExtra("check", 0);
 
@@ -59,7 +59,7 @@ public class SearchActivity extends BaseActivity{
         //   Intent intent_s =getIntent();
 //        search_s_r= intent_s.getStringExtra("start");
 
-        //      Intent intent_e =getIntent();
+        //      Intent intent_e = getIntent();
         //    search_e_r= intent_e.getStringExtra("end");
 
         EditText editText_e = (EditText) findViewById(R.id.edt_end);
@@ -72,7 +72,6 @@ public class SearchActivity extends BaseActivity{
                 search_e_r = intent.getStringExtra("address");
                 //메인에서 바로 넘어갈때
                 if (search_e_r != null) {
-
                     Log.d("aaaaaaaaaaaaa", intent.getStringExtra("address"));
                     Log.d("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee", editText_s.getText() + "");
                     EditText editText = findViewById(R.id.edt_start);
@@ -116,7 +115,6 @@ public class SearchActivity extends BaseActivity{
                 e.setText(search_e_r);
             }
         }
-
 
         editText_s.setOnKeyListener(new View.OnKeyListener() {
             @Override

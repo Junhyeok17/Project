@@ -1,39 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.ResultPaths"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/start_area"
+    <LinearLayout
+        android:id="@+id/loading"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:text="출발지"
-        android:textSize="27dp"
-        android:background="#0099FF"
-        android:textColor="@color/white"/>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#3333FF"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-    <TextView
-        android:id="@+id/arrive_area"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:text="도착지"
-        android:textSize="27dp"
-        android:background="#DDDDDD"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:textColor="@color/white"
+            android:text="로딩 중..."/>
 
-    <RadioGroup
-        android:id="@+id/paths"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pathsLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/start_area"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="출발지"
+            android:textSize="27dp"
+            android:background="#0099FF"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/arrive_area"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="도착지"
+            android:textSize="27dp"
+            android:background="#DDDDDD"/>
+
+        <RadioGroup
+            android:id="@+id/paths"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
 
 
             <RadioButton
@@ -50,113 +75,122 @@
                 android:clickable="true"
                 android:text="밝은경로"/>
 
-    </RadioGroup>
+        </RadioGroup>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="13">
-
-        <LinearLayout
-            android:id="@+id/shortestpathLayout"
+        <FrameLayout
+            android:id="@+id/pathLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="13">
 
             <LinearLayout
-                android:id="@+id/shortestpathMap"
+                android:id="@+id/shortestpathLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:orientation="vertical"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:visibility="visible"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/spendTime1"
+                <LinearLayout
+                    android:id="@+id/shortestpathMap"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="소요시간"
-                    android:textSize="27dp"
-                    android:textStyle="bold"
-                    android:textColor="#00CCFF"
-                    android:gravity="center_vertical"/>
+                    android:layout_weight="10"
+                    android:orientation="vertical"/>
 
-                <TextView
-                    android:id="@+id/distance1"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="거리"
-                    android:textSize="27dp"
-                    android:textStyle="bold"
-                    android:textColor="#00CCFF"
-                    android:gravity="center_vertical"/>
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/spendTime1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="소요시간"
+                        android:textSize="27dp"
+                        android:textStyle="bold"
+                        android:textColor="#00CCFF"
+                        android:gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/distance1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="거리"
+                        android:textSize="27dp"
+                        android:textStyle="bold"
+                        android:textColor="#00CCFF"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/lightpathLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/lightpathMap"
+                android:id="@+id/lightpathLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:orientation="vertical" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:visibility="visible"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/spendTime2"
+                <LinearLayout
+                    android:id="@+id/lightpathMap"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="소요시간"
-                    android:textSize="27dp"
-                    android:textStyle="bold"
-                    android:textColor="#00CCFF"
-                    android:gravity="center_vertical"/>
+                    android:layout_weight="10"
+                    android:orientation="vertical" />
 
-                <TextView
-                    android:id="@+id/distance2"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="거리"
-                    android:textSize="27dp"
-                    android:textStyle="bold"
-                    android:textColor="#00CCFF"
-                    android:gravity="center_vertical"/>
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/numOfLamp2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="가로등 개수"
-                    android:textSize="27dp"
-                    android:textStyle="bold"
-                    android:textColor="#00CCFF"
-                    android:gravity="center_vertical"/>
+                    <TextView
+                        android:id="@+id/spendTime2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="소요시간"
+                        android:textSize="27dp"
+                        android:textStyle="bold"
+                        android:textColor="#00CCFF"
+                        android:gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/distance2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="거리"
+                        android:textSize="27dp"
+                        android:textStyle="bold"
+                        android:textColor="#00CCFF"
+                        android:gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/numOfLamp2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="가로등 개수"
+                        android:textSize="27dp"
+                        android:textStyle="bold"
+                        android:textColor="#00CCFF"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-    </FrameLayout>
+        </FrameLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
