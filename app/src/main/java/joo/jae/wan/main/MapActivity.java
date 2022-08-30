@@ -448,7 +448,7 @@ public class MapActivity extends BaseActivity implements TMapGpsManager.onLocati
         linearLayoutTmap.addView( tMapView );
 
         // flash button control
-        View tmp_btn = this.findViewById(R.id.imageButton);
+        View tmp_btn = this.findViewById(R.id.map_imageButton);
         Intrinsics.checkNotNullExpressionValue(tmp_btn, "findViewById(R.id.imageButton)");
         final ImageButton btn = (ImageButton)tmp_btn;
         btn.setOnClickListener((View.OnClickListener)(new View.OnClickListener() {
